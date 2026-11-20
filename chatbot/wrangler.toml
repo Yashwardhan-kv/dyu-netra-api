@@ -1,0 +1,16 @@
+name = "dyunetra-chat"
+main = "worker.js"
+compatibility_date = "2026-11-01"
+workers_dev = true
+
+# Workers AI binding; no external provider key is needed
+[ai]
+binding = "AI"
+
+[vars]
+ALLOWED_ORIGINS = "https://dyunetra.dpdns.org,https://www.dyunetra.dpdns.org"
+
+# Optional fallback: configure UPSTREAM_BASE_URL only for a stable, public HTTPS API.
+
+# The API key is a SECRET. Do not put it in this file. Run:
+#   npx wrangler secret put UPSTREAM_API_KEY

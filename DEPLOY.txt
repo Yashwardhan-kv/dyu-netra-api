@@ -1,0 +1,11 @@
+DYUNETRA — DEPLOY ON VISTAPANEL
+1. Edit your real email + domain, then rebuild:
+     SITE_EMAIL=you@yourdomain.com SITE_URL=https://yourdomain.com NODE_PATH=<node_modules> node build.mjs
+   (or open dist/contact.php and set $TO_EMAIL, and edit the email in contact.html)
+2. In VistaPanel > File Manager (or FTP) open htdocs/ and upload EVERYTHING inside the "upload" zip
+   (make sure the hidden file .htaccess is included).
+3. Visit your site, then send a test message through the Contact page.
+   - Check your inbox AND htdocs/_private/messages.log (a private backup copy; web access is blocked).
+4. When SSL is active, open .htaccess and remove the # in front of the HTTPS-redirect and
+   Strict-Transport-Security lines.
+Never upload the source folder (src/, build.mjs) to htdocs.

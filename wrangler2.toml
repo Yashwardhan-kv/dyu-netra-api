@@ -1,0 +1,12 @@
+name = "dyunetra-chat"
+main = "worker.js"
+compatibility_date = "2026-11-01"
+
+[vars]
+ALLOWED_ORIGINS = "https://dyunetra.dpdns.org"
+# Public HTTPS URL of your FreeLLMAPI instance (or any OpenAI-compatible API), ending in /v1
+UPSTREAM_BASE_URL = "https://YOUR-FREELLMAPI-HOST/v1"
+MODEL = "auto"
+
+# The API key is a SECRET. Do not put it in this file. Run:
+#   npx wrangler secret put UPSTREAM_API_KEY

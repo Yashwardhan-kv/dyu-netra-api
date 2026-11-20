@@ -1,0 +1,63 @@
+/* Dyunetra Assistant widget — sci-fi themed chat */
+:root{
+  --dyu-accent:#6ff3ff;
+  --dyu-accent2:#26cfe4;
+  --dyu-bg:#04101a;
+  --dyu-bg2:#02050a;
+  --dyu-line:rgba(111,243,255,.25);
+  --dyu-ice:#e2fdff;
+  --dyu-dim:#8db4bd;
+}
+.dyu-bot{position:fixed;right:22px;bottom:22px;z-index:999999;font-family:"Rajdhani","Segoe UI",system-ui,sans-serif}
+
+/* launcher */
+.dyu-bot-fab{width:60px;height:60px;border-radius:50%;border:1px solid var(--dyu-line);background:linear-gradient(135deg,var(--dyu-bg),var(--dyu-bg2));color:var(--dyu-accent);cursor:pointer;display:grid;place-items:center;box-shadow:0 0 24px rgba(111,243,255,.25);transition:transform .25s,box-shadow .25s;position:relative}
+.dyu-bot-fab:hover{transform:scale(1.07);box-shadow:0 0 34px rgba(111,243,255,.5)}
+.dyu-bot-fab.on{transform:rotate(90deg)}
+.dyu-bot-badge{position:absolute;top:-4px;right:-4px;width:20px;height:20px;border-radius:50%;background:var(--dyu-accent);color:#01141b;font:700 11px/20px monospace;display:grid;place-items:center;box-shadow:0 0 10px var(--dyu-accent)}
+
+/* panel — CLOSED BY DEFAULT; .open class controls visibility */
+.dyu-bot-panel{position:fixed;right:22px;bottom:94px;width:min(430px,calc(100vw - 44px));height:min(760px,calc(100vh - 120px));max-height:calc(100vh - 120px);display:none;flex-direction:column;padding:0;margin:0;z-index:1000000;background:linear-gradient(180deg,var(--dyu-bg),var(--dyu-bg2));border:1px solid var(--dyu-line);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.75),0 0 30px rgba(111,243,255,.15);overflow:hidden}
+.dyu-bot-panel.open{display:flex;animation:dyu-pop .28s cubic-bezier(.34,1.4,.64,1)}
+.dyu-bot-panel:not(.open){display:none!important}
+@keyframes dyu-pop{from{opacity:0;transform:translateY(16px) scale(.96)}}
+.dyu-bot-head{display:flex;align-items:center;gap:10px;padding:8px 14px;border-bottom:1px solid var(--dyu-line);background:rgba(111,243,255,.06)}
+.dyu-bot-head img{border-radius:50%;box-shadow:0 0 12px rgba(111,243,255,.4)}
+.dyu-bot-head b{display:block;font-size:.92rem;letter-spacing:.06em;color:#fff}
+.dyu-bot-head small{color:var(--dyu-accent);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase}
+.dyu-bot-head small::before{content:"● ";color:#3dff88}
+.dyu-bot-x{margin-left:auto;background:none;border:0;color:var(--dyu-dim);font-size:1.4rem;cursor:pointer;line-height:1}
+.dyu-bot-x:hover{color:var(--dyu-accent)}
+
+/* log */
+.dyu-bot-log{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;min-height:0;scrollbar-width:thin;scrollbar-color:var(--dyu-line) transparent}
+.dyu-msg{max-width:88%;padding:10px 13px;border-radius:12px;font-size:14px;line-height:1.55;color:var(--dyu-ice);word-wrap:break-word;animation:dyu-in .25s ease}
+@keyframes dyu-in{from{opacity:0;transform:translateY(6px)}}
+.dyu-bot-msg{align-self:flex-start;background:rgba(111,243,255,.08);border:1px solid var(--dyu-line);border-bottom-left-radius:4px}
+.dyu-user{align-self:flex-end;background:linear-gradient(135deg,var(--dyu-accent),var(--dyu-accent2));color:#02222b;border-bottom-right-radius:4px;font-weight:600}
+.dyu-msg a{color:var(--dyu-accent);text-decoration:underline}
+
+/* typing dots */
+.dyu-dot{display:inline-block;width:7px;height:7px;margin-right:4px;border-radius:50%;background:var(--dyu-accent);animation:dyu-blink 1.2s infinite}
+.dyu-dot:nth-child(2){animation-delay:.2s}.dyu-dot:nth-child(3){animation-delay:.4s}
+@keyframes dyu-blink{0%,80%,100%{opacity:.25}40%{opacity:1}}
+
+/* quick chips */
+.dyu-bot-quick{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 10px}
+.dyu-q{background:rgba(111,243,255,.07);border:1px solid var(--dyu-line);color:var(--dyu-accent);border-radius:20px;padding:5px 11px;font:600 .74rem "Rajdhani",sans-serif;letter-spacing:.03em;cursor:pointer;transition:background .2s}
+.dyu-q:hover{background:rgba(111,243,255,.18)}
+
+/* input */
+.dyu-bot-form{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--dyu-line)}
+.dyu-bot-form input{flex:1;background:rgba(2,5,10,.7);border:1px solid var(--dyu-line);border-radius:10px;color:var(--dyu-ice);padding:11px 14px;font:500 14px "Rajdhani",sans-serif;outline:none}
+.dyu-bot-form input:focus{border-color:var(--dyu-accent2);box-shadow:0 0 12px rgba(111,243,255,.2)}
+.dyu-bot-form button{width:42px;border-radius:10px;border:1px solid var(--dyu-line);background:linear-gradient(135deg,var(--dyu-accent),var(--dyu-accent2));color:#02222b;cursor:pointer;display:grid;place-items:center;transition:filter .2s}
+.dyu-bot-form button:hover{filter:brightness(1.15)}
+
+.dyu-bot-foot{text-align:center;font-size:.68rem;letter-spacing:.06em;color:var(--dyu-dim);padding:6px;border-top:1px solid rgba(111,243,255,.1)}
+.dyu-bot-foot a{color:var(--dyu-accent)}
+
+@media (max-width:520px){
+  .dyu-bot{right:14px;bottom:14px}
+  .dyu-bot-panel{right:14px;left:14px;bottom:86px;width:auto;height:min(70vh,520px)}
+}

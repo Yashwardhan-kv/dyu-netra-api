@@ -1,0 +1,32 @@
+name = "dyunetra-site"
+main = "./contact-worker.mjs"
+compatibility_date = "2025-01-01"
+
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+run_worker_first = ["/api/*"]
+
+[vars]
+ALLOWED_ORIGINS = "https://dyunetra.dpdns.org,https://www.dyunetra.dpdns.org"
+SUPABASE_URL = "https://rvppydncsdfyhjiuvart.supabase.co"
+SUPABASE_PUBLISHABLE_KEY = "sb_publishable_fJn13_ySkM8CvvkRwJ2v-A_cqy1vapM"
+CONTACT_FROM_EMAIL = "founder@dyunetra.dpdns.org"
+CONTACT_TO_EMAIL = "dyunetra@gmail.com"
+
+# shortcut: per-location limits are approximate; use a strict global limiter if spam bypasses them.
+[[ratelimits]]
+name = "CONTACT_FORM_LIMITER"
+namespace_id = "73184271"
+
+  [ratelimits.simple]
+  limit = 5
+  period = 60
+
+[[routes]]
+pattern = "dyunetra.dpdns.org"
+custom_domain = true
+
+[[routes]]
+pattern = "www.dyunetra.dpdns.org"
+custom_domain = true

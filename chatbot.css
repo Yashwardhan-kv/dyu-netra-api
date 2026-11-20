@@ -1,0 +1,125 @@
+/* Dyunetra Assistant — widget styles. Change the variables below to retheme. */
+#dyu-chat-root {
+  --dyu-bg: #02050a;
+  --dyu-panel: #070d16;
+  --dyu-panel-2: #0c1522;
+  --dyu-border: rgba(120, 200, 255, 0.18);
+  --dyu-text: #e6eef7;
+  --dyu-muted: #8aa0b6;
+  --dyu-accent: #35d0ff;
+  --dyu-accent-ink: #02141c;
+  --dyu-user: #12324a;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 2147483000;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--dyu-text);
+}
+#dyu-chat-root *, #dyu-chat-root *::before, #dyu-chat-root *::after { box-sizing: border-box; }
+
+.dyu-launcher {
+  width: 58px; height: 58px; border-radius: 50%;
+  border: 1px solid var(--dyu-border);
+  background: var(--dyu-panel);
+  color: var(--dyu-accent);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55), 0 0 0 0 rgba(53, 208, 255, 0.35);
+  animation: dyu-pulse 3s ease-out infinite;
+  transition: transform .15s ease;
+}
+.dyu-launcher:hover { transform: scale(1.06); }
+.dyu-launcher:focus-visible, .dyu-icon-btn:focus-visible, .dyu-chip:focus-visible,
+.dyu-send:focus-visible, .dyu-input:focus-visible { outline: 2px solid var(--dyu-accent); outline-offset: 2px; }
+.dyu-launcher svg { width: 26px; height: 26px; }
+@keyframes dyu-pulse {
+  0% { box-shadow: 0 8px 30px rgba(0,0,0,.55), 0 0 0 0 rgba(53,208,255,.35); }
+  70% { box-shadow: 0 8px 30px rgba(0,0,0,.55), 0 0 0 14px rgba(53,208,255,0); }
+  100% { box-shadow: 0 8px 30px rgba(0,0,0,.55), 0 0 0 0 rgba(53,208,255,0); }
+}
+
+.dyu-panel {
+  position: absolute; right: 0; bottom: 74px;
+  width: 380px; max-width: calc(100vw - 24px);
+  height: 560px; max-height: calc(100vh - 110px);
+  display: none; flex-direction: column;
+  background: var(--dyu-panel);
+  border: 1px solid var(--dyu-border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.65);
+}
+#dyu-chat-root.dyu-open .dyu-panel { display: flex; }
+#dyu-chat-root.dyu-open .dyu-launcher { animation: none; }
+
+.dyu-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 14px;
+  background: linear-gradient(180deg, var(--dyu-panel-2), var(--dyu-panel));
+  border-bottom: 1px solid var(--dyu-border);
+}
+.dyu-title { flex: 1; min-width: 0; }
+.dyu-title strong { display: block; font-size: 14px; letter-spacing: .06em; }
+.dyu-title span { font-size: 12px; color: var(--dyu-muted); }
+.dyu-status { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #3ddc97; margin-right: 6px; }
+.dyu-icon-btn {
+  background: transparent; border: 1px solid transparent; color: var(--dyu-muted);
+  width: 32px; height: 32px; border-radius: 8px; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  text-decoration: none; font-size: 12px;
+}
+.dyu-icon-btn:hover { color: var(--dyu-text); border-color: var(--dyu-border); }
+.dyu-icon-btn svg { width: 16px; height: 16px; }
+
+.dyu-messages {
+  flex: 1; overflow-y: auto; padding: 14px;
+  display: flex; flex-direction: column; gap: 10px;
+  scroll-behavior: smooth;
+}
+.dyu-msg {
+  max-width: 88%; padding: 9px 12px; border-radius: 12px;
+  word-wrap: break-word; overflow-wrap: anywhere;
+}
+.dyu-msg a { color: var(--dyu-accent); text-decoration: underline; }
+.dyu-bot { align-self: flex-start; background: var(--dyu-panel-2); border: 1px solid var(--dyu-border); border-bottom-left-radius: 4px; }
+.dyu-user { align-self: flex-end; background: var(--dyu-user); border-bottom-right-radius: 4px; }
+
+.dyu-typing { display: inline-flex; gap: 4px; padding: 4px 0; }
+.dyu-typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--dyu-muted); animation: dyu-blink 1.2s infinite; }
+.dyu-typing i:nth-child(2) { animation-delay: .2s; }
+.dyu-typing i:nth-child(3) { animation-delay: .4s; }
+@keyframes dyu-blink { 0%, 80%, 100% { opacity: .25; } 40% { opacity: 1; } }
+
+.dyu-chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 14px 10px; }
+.dyu-chip {
+  background: transparent; color: var(--dyu-accent);
+  border: 1px solid var(--dyu-border); border-radius: 999px;
+  padding: 5px 11px; font-size: 12.5px; cursor: pointer; font-family: inherit;
+}
+.dyu-chip:hover { background: rgba(53, 208, 255, 0.1); }
+
+.dyu-form { display: flex; gap: 8px; padding: 10px 12px; border-top: 1px solid var(--dyu-border); background: var(--dyu-panel); }
+.dyu-input {
+  flex: 1; min-width: 0; background: var(--dyu-bg); color: var(--dyu-text);
+  border: 1px solid var(--dyu-border); border-radius: 10px;
+  padding: 9px 12px; font-size: 14px; font-family: inherit;
+}
+.dyu-input::placeholder { color: var(--dyu-muted); }
+.dyu-send {
+  background: var(--dyu-accent); color: var(--dyu-accent-ink);
+  border: 0; border-radius: 10px; padding: 0 14px; font-weight: 600; cursor: pointer; font-family: inherit;
+}
+.dyu-send:disabled, .dyu-input:disabled { opacity: .5; cursor: not-allowed; }
+.dyu-note { padding: 0 14px 10px; font-size: 11px; color: var(--dyu-muted); background: var(--dyu-panel); }
+
+@media (max-width: 480px) {
+  #dyu-chat-root { right: 12px; bottom: 12px; }
+  .dyu-panel { position: fixed; right: 8px; left: 8px; bottom: 82px; width: auto; max-width: none; height: min(560px, calc(100vh - 100px)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dyu-launcher, .dyu-typing i { animation: none; }
+  .dyu-messages { scroll-behavior: auto; }
+}

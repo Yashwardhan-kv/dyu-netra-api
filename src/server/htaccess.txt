@@ -1,0 +1,77 @@
+# ============================================================
+#  Dyunetra — Apache hardening (upload as ".htaccess" in htdocs)
+# ============================================================
+
+Options -Indexes -MultiViews
+ServerSignature Off
+DirectoryIndex index.html
+ErrorDocument 403 /404.html
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# --- Force HTTPS: enable ONLY after your SSL certificate is active ---
+# RewriteCond %{HTTPS} !=on
+# RewriteCond %{HTTP:X-Forwarded-Proto} !https
+# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# --- Block hidden files, backups, configs, source/dev files ---
+RewriteRule (^|/)\.(?!well-known) - [F,L]
+RewriteRule \.(bak|old|orig|save|swp|sql|log|ini|env|md|map|ts|jsx|tsx|lock|json|yml|yaml|sh|git)$ - [F,NC,L]
+RewriteRule ^_private(/|$) - [F,L]
+
+# --- Block common scraping / download tools by user-agent ---
+RewriteCond %{HTTP_USER_AGENT} (httrack|wget|curl|python-requests|scrapy|libwww-perl|nikto|sqlmap|dirbuster|gobuster|nmap|masscan|mj12bot|dotbot|semrush|ahrefs) [NC]
+RewriteRule ^ - [F,L]
+
+# --- Disallow iframe embedding of our pages anywhere (anti-framing / anti-clickjacking) ---
+# (X-Frame-Options DENY header below also covers this)
+
+# --- Block direct access to PHP except the contact handler ---
+RewriteCond %{REQUEST_URI} !^/contact\.php$ [NC]
+RewriteRule \.(php|phtml|phar|inc)$ - [F,NC,L]
+
+# --- Hotlink protection for images (allows empty referrer + same host) ---
+RewriteCond %{HTTP_REFERER} !^$
+RewriteCond %{HTTP_HOST}@@%{HTTP_REFERER} !^([^@]*)@@https?://\1/ [NC]
+RewriteRule \.(webp|png|jpe?g|gif|svg|ico)$ - [F,NC,L]
+</IfModule>
+
+# --- Security headers ---
+<IfModule mod_headers.c>
+Header always set X-Content-Type-Options "nosniff"
+Header always set X-Frame-Options "DENY"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+Header always set Cross-Origin-Opener-Policy "same-origin"
+Header always set Cross-Origin-Resource-Policy "same-origin"
+Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://rvppydncsdfyhjiuvart.supabase.co https://dyunetra-chat.dyunetra-1inlv.workers.dev; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'"
+Header always set X-XSS-Protection "1; mode=block"
+Header always set X-Permitted-Cross-Domain-Policies "none"
+# Enable once HTTPS is working (tells browsers to always use HTTPS):
+# Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+Header unset X-Powered-By
+Header always unset X-Powered-By
+</IfModule>
+
+# --- Compression + caching ---
+<IfModule mod_deflate.c>
+AddOutputFilterByType DEFLATE text/html text/css application/javascript text/javascript application/json image/svg+xml
+</IfModule>
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresByType image/webp "access plus 1 year"
+ExpiresByType image/png  "access plus 1 year"
+ExpiresByType image/jpeg "access plus 1 year"
+ExpiresByType text/css   "access plus 1 month"
+ExpiresByType application/javascript "access plus 1 month"
+ExpiresByType text/javascript "access plus 1 month"
+ExpiresByType text/html  "access plus 0 seconds"
+</IfModule>
+
+# --- PHP safety (ignored by hosts that do not allow overrides) ---
+<IfModule mod_php.c>
+php_flag display_errors off
+php_flag expose_php off
+</IfModule>

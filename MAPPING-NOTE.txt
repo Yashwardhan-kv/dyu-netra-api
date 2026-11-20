@@ -1,0 +1,3 @@
+// Contact form fields → Supabase column mapping note:
+// HTML form field: org → Supabase column: organisation
+// Make sure the mapping above is consistent. Check build passes with esbuild syntax check.
